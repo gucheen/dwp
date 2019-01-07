@@ -1,0 +1,7 @@
+node_modules
+.vscode
+database
+config.js
+.DS_Store
+makefile
+package-lock.json
