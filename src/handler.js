@@ -38,12 +38,12 @@ const postHandler = ({ uid, aria2 = false }) => {
     });
 
     if (aria2) {
-      const aria2Params = urls.map((url) => ({
+      const aria2Params = urls.map((urlPair) => ({
         methodName: 'aria2.addUri',
         params: [
           `token:${config.aria2Token}`,
           [
-            url,
+            urlPair.url,
           ],
           {
             dir: path.join(config.saveDir, `pics/${uid}`),

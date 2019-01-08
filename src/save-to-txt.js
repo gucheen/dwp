@@ -19,16 +19,16 @@ const saveResourcesToTxt = async ({ uid, aria2 = false }) => {
     contentStream.on('end', () => {
       fs.createReadStream(dataTxtPath).pipe(writeStream);
     });
-    urls.forEach((url) => {
-      contentStream.push(url + '\n');
+    urls.forEach((urlPair) => {
+      contentStream.push(urlPair.url + '\n');
     });
     contentStream.push(null);
   } else {
     const writeStream = fs.createWriteStream(dataTxtPath);
     const contentStream = new Readable();
     contentStream.pipe(writeStream);
-    urls.forEach((url) => {
-      contentStream.push(url + '\n');
+    urls.forEach((urlPair) => {
+      contentStream.push(urlPair.url + '\n');
     });
     contentStream.push(null);
   }
