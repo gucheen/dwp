@@ -43,9 +43,15 @@ const getResources = async ({ uid }) => {
       total = body.data.cardlistInfo.total;
     }
     const cards = body.data.cards;
-    const nextExists = cards.some((card) => {
+    const nextExists = cards.some(async (card) => {
       const mblog = card.mblog;
-      if (latestId && !mblog.isTop && latestId === mblog.id) {
+      if (mblog.isTop) {
+        const exist = await collection.count({ id: mblog.id }) > 0;
+        if (exist) {
+          return false;
+        }
+      }
+      if (latestId &&  latestId === mblog.id) {
         return true;
       }
       if (mblog) {
