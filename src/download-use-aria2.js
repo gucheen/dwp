@@ -2,6 +2,8 @@ const util = require('util');
 const request = require('request');
 const post = util.promisify(request.post);
 
+const logger = require('./logger');
+
 const downloadUseAria2 = (rpcRequest) => {
   post(rpcRequest)
     .then((response) => {
