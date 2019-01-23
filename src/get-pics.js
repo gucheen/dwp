@@ -47,7 +47,7 @@ const getResources = async ({ uid, all = false }) => {
     }
     const cards = body.data.cards;
     let nextExists = false;
-    cards.forEach(async (card) => {
+    cards.some(async (card) => {
       const mblog = card.mblog;
       if (mblog.isTop) {
         const exist = await collection.countDocuments({ id: mblog.id }) > 0;
@@ -57,6 +57,7 @@ const getResources = async ({ uid, all = false }) => {
       }
       if (latestId && latestId === mblog.id) {
         nextExists = true;
+        return true;
       }
       if (mblog) {
         if (typeof user === 'undefined'

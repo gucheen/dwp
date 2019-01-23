@@ -19,10 +19,8 @@ exports.handleUrls = (urls) => {
       json: true,
     })
     .then((response) => {
-      console.log(response);
     })
     .catch((error) => {
-      console.error(error);
     });
   });
 };
