@@ -12,12 +12,14 @@ const sleep = (ms) => {
   });
 };
 
-const getResources = async ({ uid }) => {
-  const collection = db.client.db(db.dbName).collection(`${uid}_data`);
-  const latest = await collection.find({}).sort({ id: -1 }).limit(1).toArray();
+const getResources = async ({ uid, all = false }) => {
   let latestId;
-  if (latest.length) {
-    latestId = latest[0].id.toString();
+  if (!all) {
+    const collection = db.client.db(db.dbName).collection(`${uid}_data`);
+    const latest = await collection.find({}).sort({ id: -1 }).limit(1).toArray();
+    if (latest.length) {
+      latestId = latest[0].id.toString();
+    }
   }
   let page = 1;
   const count = 25;
@@ -31,7 +33,8 @@ const getResources = async ({ uid }) => {
     const response = await get({
       uri: url,
       json: true,
-    });
+      timeout: 10000,
+    })
     if (!response || response.statusCode !== 200) {
       continue;
     }
@@ -46,7 +49,7 @@ const getResources = async ({ uid }) => {
     const nextExists = cards.some(async (card) => {
       const mblog = card.mblog;
       if (mblog.isTop) {
-        const exist = await collection.count({ id: mblog.id }) > 0;
+        const exist = await collection.countDocuments({ id: mblog.id }) > 0;
         if (exist) {
           return false;
         }

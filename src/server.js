@@ -9,7 +9,7 @@ const router = new Router();
 
 router.post('/ifttt/weibo/:uid', async (ctx) => {
   ctx.body = { ok: 1 };
-  postHandler({ uid: ctx.params.uid, aria2: true });
+  postHandler({ uid: ctx.params.uid, aria2: false });
 });
 
 app

@@ -5,9 +5,9 @@ const downloadUseAria2 = require('./download-use-aria2');
 const logger = require('./logger');
 const config = require('../config');
 
-const postHandler = ({ uid, aria2 = false }) => {
+const postHandler = ({ uid, aria2 = false, all = false }) => {
   logger.log(`[start]: ${uid}`);
-  getResources({ uid })
+  return getResources({ uid, all })
   .then(({ urls, data, user }) => {
     if (urls.length === 0) {
       logger.log(`${uid} 没有新图片`);
@@ -66,7 +66,7 @@ const postHandler = ({ uid, aria2 = false }) => {
     }
   })
   .catch((error) => {
-    logger.error(error);
+    console.error(error);
   });
 };
 
