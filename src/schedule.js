@@ -2,7 +2,6 @@ const schedule = require('node-schedule');
 
 const config = require('../config');
 const { postHandler } = require('./handler');
-const db = require('./database');
 
 const rule = new schedule.RecurrenceRule();
 rule.minute = 30;

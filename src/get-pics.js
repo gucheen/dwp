@@ -46,7 +46,8 @@ const getResources = async ({ uid, all = false }) => {
       total = body.data.cardlistInfo.total;
     }
     const cards = body.data.cards;
-    const nextExists = cards.some(async (card) => {
+    let nextExists = false;
+    cards.forEach(async (card) => {
       const mblog = card.mblog;
       if (mblog.isTop) {
         const exist = await collection.countDocuments({ id: mblog.id }) > 0;
@@ -54,8 +55,8 @@ const getResources = async ({ uid, all = false }) => {
           return false;
         }
       }
-      if (latestId &&  latestId === mblog.id) {
-        return true;
+      if (latestId && latestId === mblog.id) {
+        nextExists = true;
       }
       if (mblog) {
         if (typeof user === 'undefined'
@@ -93,7 +94,6 @@ const getResources = async ({ uid, all = false }) => {
         }
         data.push(single);
       }
-      return false;
     });
     if (nextExists) {
       logger.log(`ID: ${latestId} 开始已经获取过`);

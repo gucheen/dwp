@@ -4,6 +4,7 @@ const db = require('./database');
 const downloadUseAria2 = require('./download-use-aria2');
 const logger = require('./logger');
 const config = require('../config');
+const { handleUrls } = require('./telegram');
 
 const postHandler = ({ uid, aria2 = false, all = false }) => {
   logger.log(`[start]: ${uid}`);
@@ -36,6 +37,8 @@ const postHandler = ({ uid, aria2 = false, all = false }) => {
       }
       logger.log(`[db updated] users: ${uid}`);
     });
+
+    handleUrls(urls);
 
     if (aria2) {
       const aria2Params = urls.map((urlPair) => ({
