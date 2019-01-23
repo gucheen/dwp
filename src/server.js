@@ -3,6 +3,7 @@ const Router = require('koa-router');
 const db = require('./database');
 const { postHandler } = require('./handler');
 const config = require('../config');
+const scheduleJob = require('./schedule');
 
 const app = new koa();
 const router = new Router();
@@ -23,4 +24,5 @@ db.client.connect((err) => {
   }
   app.listen(config.serverPort || 3000);
   console.log(`Webhook server listened on :${config.serverPort || 3000}`);
+  scheduleJob();
 });
