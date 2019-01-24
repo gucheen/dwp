@@ -38,7 +38,9 @@ const postHandler = ({ uid, aria2 = false, all = false }) => {
       logger.log(`[db updated] users: ${uid}`);
     });
 
-    handleUrls(urls);
+    if (config.telegramId) {
+      handleUrls(urls);
+    }
 
     if (aria2) {
       const aria2Params = urls.map((urlPair) => ({

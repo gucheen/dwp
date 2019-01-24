@@ -4,4 +4,7 @@ module.exports = {
   dbName: 'weibopicspider',
   aria2Token: 'sometoken',
   serverPort: 3000,
+  subscribeUsers: [],
+  telegramToken: '',
+  telegramId: '',
 };
